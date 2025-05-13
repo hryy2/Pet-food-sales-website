@@ -1,13 +1,12 @@
-name: Deploy Status
+name: Deploy with Deployment API
 
 on:
   push:
     branches:
-      - main  # 或者 main，看你仓库默认分支
+      - main  # 或 main
 
 jobs:
   deploy:
-    name: Deployment
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
@@ -25,20 +24,25 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Deploy to local server (mock step)
-        run: echo "部署到本地 PM2 或 Jenkins 的逻辑你自己在真实部署里执行"
-
+      # ⭐ 1. 创建 Deployment 记录
       - name: Create GitHub Deployment
         uses: bobheadxi/deployments@v1
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
           env: production
+          desc: 部署开始咯！
 
-      - name: Update Deployment Status
+      # ⭐ 2. 模拟部署步骤
+      - name: Simulate deployment
+        run: echo "部署逻辑写在这里，比如 SSH 到服务器 + pm2 restart"
+
+      # ⭐ 3. 标记成功
+      - name: Mark deployment finished
         uses: bobheadxi/deployments@v1
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
-          status: success
           env: production
+          status: success
+          desc: 部署成功完成！
