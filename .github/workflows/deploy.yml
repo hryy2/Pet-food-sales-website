@@ -1,4 +1,4 @@
-name: Deployment Status
+name: Auto Deploy with Jenkins
 
 on:
   push:
@@ -6,30 +6,36 @@ on:
       - main
 
 jobs:
-  deployment:
+  deploy:
+    name: Trigger Jenkins & Set GitHub Deployment
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Start Deployment
+      # Step 1: Create deployment (for GitHub right-side display)
+      - name: Start deployment
         id: deployment_start
         uses: bobheadxi/deployments@v1
         with:
           step: start
           token: ${{ secrets.PAT_TOKEN }}
           env: production
-          desc: 部署开始（来自 GitHub Actions）
+          desc: 🚀 开始触发 Jenkins 自动部署
 
-      # 你可以插入自己的构建流程或 Jenkins 触发器（如果需要）
+      # Step 2: Trigger Jenkins webhook (注意这里就是你自己本地 Jenkins 的 webhook 地址)
+      - name: Trigger Jenkins Webhook
+        run: |
+          curl -X POST ${{ secrets.JENKINS_WEBHOOK_URL }}
 
-      - name: Mark Deployment as Successful
+      # Step 3: 标记部署成功（这里你也可以根据情况添加失败状态）
+      - name: Finish deployment
         uses: bobheadxi/deployments@v1
         with:
           step: finish
           token: ${{ secrets.PAT_TOKEN }}
           env: production
           status: success
-          desc: Jenkins 已完成部署
+          desc: ✅ Jenkins 自动部署完成
           deployment_id: ${{ steps.deployment_start.outputs.deployment_id }}
