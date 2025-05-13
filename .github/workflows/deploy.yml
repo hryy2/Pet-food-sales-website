@@ -1,48 +1,36 @@
-name: Deploy with Deployment API
+name: Deploy Status
 
 on:
   push:
     branches:
-      - main  # 或 main
+      - main
 
 jobs:
   deploy:
+    name: Fake Deploy for GitHub Deployment Status
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build
-
-      # ⭐ 1. 创建 Deployment 记录
       - name: Create GitHub Deployment
         uses: bobheadxi/deployments@v1
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
           env: production
-          desc: 部署开始咯！
+          desc: 部署开始
 
-      # ⭐ 2. 模拟部署步骤
-      - name: Simulate deployment
-        run: echo "部署逻辑写在这里，比如 SSH 到服务器 + pm2 restart"
+      # ❌ 不执行 npm install，直接模拟部署成功
+      - name: Mock Deployment Command
+        run: echo "模拟部署成功，实际部署通过 Jenkins 完成"
 
-      # ⭐ 3. 标记成功
-      - name: Mark deployment finished
+      - name: Mark Deployment Finished
         uses: bobheadxi/deployments@v1
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           env: production
           status: success
-          desc: 部署成功完成！
+          desc: Jenkins 已完成部署
