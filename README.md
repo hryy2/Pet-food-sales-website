@@ -1,3 +1,4 @@
+![Deployment](https://github.com/hryy2/Pet-food-sales-website/actions/workflows/deploy.yml/badge.svg)
 # Lovepet - MERN Stack Pet Food Sale Website
 
 ## Overview
