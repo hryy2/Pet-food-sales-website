@@ -20,9 +20,7 @@ import OrderSuccessfull from './Components/OrderSuccesfull/OrderSuccessfull'
 import OrderDetail from './Components/OrderDetail/OrderDetail'
 import PrivateLayout from './Layouts/PrivateLayout/PrivateLayout'
 import NotFound from './Components/NotFound/NotFound'
-import { useState } from 'react'  // ✅ 别忘了加 useState
-
-
+import { useState } from 'react'
 
 const App = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -48,15 +46,9 @@ const App = () => {
     <BrowserRouter>
       <ToastContainer position='bottom-center' autoClose={1000} theme='dark' draggable />
       <Routes>
-        {/* <Route path='/' element={<Layout />}> */}
         <Route path='/' element={<Layout searchResults={searchResults} setSearchResults={setSearchResults} />}>
-
-          {/* <Route index element={<Homepage />} /> */}
           <Route index element={<Homepage searchResults={searchResults} setSearchResults={setSearchResults} />} />
-
           <Route path='store' element={<Store />} />
-          {/* <Route path='login' element={<Login />} />
-          <Route path='signUp' element={<SignUp />} /> */}
           <Route path='productdetail/:id' element={<ProductDetail />} />
           <Route path='help' element={<HelpCenter />} />
           <Route path='cart' element={<Cart />} />
@@ -68,7 +60,7 @@ const App = () => {
             <Route path='/order-detail/:id' element={<OrderDetail />} />
           </Route>
         </Route>
-        {/* 登录页面使用 AuthLayout 包裹，全屏显示 */}
+       {/* The login page is wrapped with AuthLayout and displayed in full screen */}
         <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
