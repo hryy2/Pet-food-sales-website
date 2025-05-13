@@ -1,4 +1,4 @@
-name: Fake Deployment to Show GitHub Deployment Panel
+name: Deploy Status
 
 on:
   push:
@@ -7,28 +7,30 @@ on:
 
 jobs:
   deploy:
+    name: Fake Deploy for GitHub Deployment Status
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v2
 
       - name: Create GitHub Deployment
         uses: bobheadxi/deployments@v1
         with:
           step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           env: production
-          desc: 部署开始（来自 GitHub Actions）
+          desc: 部署开始
 
-      - name: Simulate Deployment
-        run: echo "This simulates a Jenkins deployment..."
+      # ❌ 不执行 npm install，直接模拟部署成功
+      - name: Mock Deployment Command
+        run: echo "模拟部署成功，实际部署通过 Jenkins 完成"
 
-      - name: Mark Deployment as Successful
+      - name: Mark Deployment Finished
         uses: bobheadxi/deployments@v1
         with:
           step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           env: production
           status: success
-          desc: Jenkins 实际完成部署
+          desc: Jenkins 已完成部署
