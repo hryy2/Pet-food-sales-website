@@ -20,15 +20,15 @@ This project is a fully responsive sale website for selling pet food, developed 
 
 ### Backend Setup
 Clone the repository:
-   **cd Pet-Food-Website**
-   **cd Backend**
-   **npm install**
-   **npm run dev**
+   cd Pet-Food-Website  
+   cd Backend  
+   npm install  
+   npm run dev  
 
 ### Frontend Setup
-   **cd Pet-Food-Website**
-   **cd Frontend**
-   **npm install**
-   **npm start**
+   cd Pet-Food-Website
+   cd Frontend
+   npm install
+   npm start
 
 
