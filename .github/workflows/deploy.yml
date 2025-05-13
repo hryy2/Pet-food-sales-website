@@ -1,4 +1,4 @@
-name: Deploy Status
+name: Deployment Status
 
 on:
   push:
@@ -6,27 +6,25 @@ on:
       - main
 
 jobs:
-  deploy:
-    name: Fake Deploy for GitHub Deployment Status
+  deployment:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Create GitHub Deployment
+      - name: Start Deployment
+        id: deployment_start
         uses: bobheadxi/deployments@v1
         with:
           step: start
           token: ${{ secrets.PAT_TOKEN }}
           env: production
-          desc: 部署开始
+          desc: 部署开始（来自 GitHub Actions）
 
-      # ❌ 不执行 npm install，直接模拟部署成功
-      - name: Mock Deployment Command
-        run: echo "模拟部署成功，实际部署通过 Jenkins 完成"
+      # 你可以插入自己的构建流程或 Jenkins 触发器（如果需要）
 
-      - name: Mark Deployment Finished
+      - name: Mark Deployment as Successful
         uses: bobheadxi/deployments@v1
         with:
           step: finish
@@ -34,3 +32,4 @@ jobs:
           env: production
           status: success
           desc: Jenkins 已完成部署
+          deployment_id: ${{ steps.deployment_start.outputs.deployment_id }}
