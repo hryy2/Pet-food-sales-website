@@ -26,9 +26,9 @@ Clone the repository:
    npm run dev  
 
 ### Frontend Setup
-   cd Pet-Food-Website
-   cd Frontend
-   npm install
-   npm start
+   cd Pet-Food-Website  
+   cd Frontend  
+   npm install  
+   npm start  
 
 
