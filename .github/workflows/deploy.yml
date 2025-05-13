@@ -22,7 +22,7 @@ jobs:
           step: start
           token: ${{ secrets.PAT_TOKEN }}
           env: production
-          desc: 🚀 开始触发 Jenkins 自动部署
+          desc: 开始触发 Jenkins 自动部署
 
       # Step 2: Trigger Jenkins webhook (注意这里就是你自己本地 Jenkins 的 webhook 地址)
       - name: Trigger Jenkins Webhook
@@ -37,5 +37,5 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
           env: production
           status: success
-          desc: ✅ Jenkins 自动部署完成
+          desc: Jenkins 自动部署完成
           deployment_id: ${{ steps.deployment_start.outputs.deployment_id }}
